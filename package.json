@@ -1,0 +1,29 @@
+{
+  "name": "rogueone",
+  "version": "1.0.0",
+  "description": "Javascript MVC framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stonezhong/rogueone.git"
+  },
+  "keywords": [
+    "javascript",
+    "mvc",
+    "angular",
+    "angularjs"
+  ],
+  "author": "Stone Zhong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stonezhong/rogueone/issues"
+  },
+  "homepage": "https://github.com/stonezhong/rogueone#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "parsehtml": "^1.0.0"
+  }
+}
