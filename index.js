@@ -1,11 +1,13 @@
 'use strict';
 
-const Scope = require('./lib/scope');
-const compiler = require('./lib/compiler');
-const rogueone = require('./lib/rogueone');
+const _rogueone = require('./lib/rogueone');
 
-module.exports = {
-    rogueone,
-    Scope,
-    compiler,
+const dependencies = require('./lib/dependencies');
+
+function rogueone({$, _}) {
+    dependencies.$ = $;
+    dependencies._ = _;
+    return _rogueone;
 };
+
+module.exports = rogueone;
