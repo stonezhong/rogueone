@@ -23,5 +23,6 @@
   },
   "homepage": "https://github.com/stonezhong/rogueone#readme",
   "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
