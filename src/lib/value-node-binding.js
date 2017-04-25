@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const Binding = require('./binding');
+import _ from 'lodash';
+import Binding from './binding';
 
-class ValueNodeBinding extends Binding {
+export default class ValueNodeBinding extends Binding {
     /**
      * 
      * @param {TextNode | Attribute} node 
@@ -39,5 +39,3 @@ class ValueNodeBinding extends Binding {
         this.getNode().nodeValue = newValue;
     }
 }
-
-module.exports = ValueNodeBinding;

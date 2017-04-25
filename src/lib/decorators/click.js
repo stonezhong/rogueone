@@ -1,9 +1,9 @@
 'use strict';
 
-const utils = require('../utils');
-const Decorator = require('../decorator');
+import { evaluate } from '../utils';
+import Decorator from '../decorator';
 
-class ClickDecorator extends Decorator {
+export default class ClickDecorator extends Decorator {
 
     /**
      * Constructor
@@ -21,7 +21,7 @@ class ClickDecorator extends Decorator {
 
         element.addEventListener('click', function() {
             const model = module.getModel(element);
-            utils.evaluate(model, contextExpression);
+            evaluate(model, contextExpression);
             module.apply();
         }, false);
     }
@@ -30,5 +30,3 @@ class ClickDecorator extends Decorator {
 function clickDecoratorFactory(module, element, contextExpression) {
     return new ClickDecorator(module, element, contextExpression);
 }
-
-module.exports = clickDecoratorFactory;

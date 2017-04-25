@@ -7,7 +7,7 @@
  * via the apply function, it can apply the expression value to the node
  * 
  */
-class Binding {
+export default class Binding {
     constructor(node, callback) {
         this.node = node;
         this.callback = callback;
@@ -28,5 +28,3 @@ class Binding {
         throw new Error('Binding.apply is abstract method');
     }
 }
-
-module.exports = Binding;

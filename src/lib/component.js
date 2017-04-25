@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const ValueNodeBinding = require('./value-node-binding');
+import _ from 'lodash';
+import ValueNodeBinding from './value-node-binding';
 
-class Component {
+export default class Component {
     /**
      * 
      * @param {Module} module 
@@ -84,5 +84,3 @@ class Component {
         throw new Error('Component.render is abstract method');
     }
 }
-
-module.exports = Component;

@@ -14,7 +14,7 @@
  *     {isExpression: false, value: 'b'}
  * ]
  */
-function parseExpression(expression, start, end) {
+export function parseExpression(expression, start, end) {
     let index = 0;
     let segments = [];
     let inQuotes = false;   // only needed when isExpression is true
@@ -87,7 +87,7 @@ function parseExpression(expression, start, end) {
  * @param {array} segments - array of segment
  * @return {boolean} true if there is an expression segment, otherwise false.
  */
-function segmentsHasExpression(segments) {
+export function segmentsHasExpression(segments) {
     for (let i = 0; i < segments.length; i ++) {
         const segment = segments[i];
         if (segment.isExpression) {
@@ -104,7 +104,7 @@ function segmentsHasExpression(segments) {
  * @return {string} expression value.
  * 
  */
-function getSegmentsValue(context, segments) {
+export function getSegmentsValue(context, segments) {
     let value = '';
     for (let i = 0; i < segments.length; i ++) {
         const segment = segments[i];
@@ -125,7 +125,7 @@ function getSegmentsValue(context, segments) {
  * @param {string} expression - the expression to evaluate
  * @return {*} the value of the expression
  */
-function evaluate(context, expression) {
+export function evaluate(context, expression) {
     const statements = `
         (function() { 
             return (${expression});
@@ -139,7 +139,7 @@ function evaluate(context, expression) {
  * @param {Element} element 
  * @param {function} callback 
  */
-function forEachChildElement(element, callback) {
+export function forEachChildElement(element, callback) {
     let currentChildElement = element.firstElementChild;
     while (currentChildElement !== null) {
         const nextChildElement = currentChildElement.nextElementSibling;
@@ -147,12 +147,3 @@ function forEachChildElement(element, callback) {
         currentChildElement = nextChildElement;
     }
 }
-
-
-module.exports = {
-    parseExpression,
-    segmentsHasExpression,
-    getSegmentsValue,
-    evaluate,
-    forEachChildElement,
-};

@@ -1,6 +1,6 @@
 'use strict';
 
-class Decorator {
+export default class Decorator {
     /**
      * 
      * @param {Module} module 
@@ -53,5 +53,3 @@ class Decorator {
     }
 
 }
-
-module.exports = Decorator;

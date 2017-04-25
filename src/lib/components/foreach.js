@@ -1,6 +1,6 @@
 'use strict';
 
-const _ = require('lodash');
+import _ from 'lodash';
 
 /**
  * <forEach data-model="{collection: this.stocks, containerTag: 'div'}">...</forEach>
@@ -25,4 +25,4 @@ const forEach = {
     }
 }
 
-module.exports = forEach;
+export default forEach;

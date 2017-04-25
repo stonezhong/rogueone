@@ -1,11 +1,17 @@
 'use strict';
 
-const _ = require('lodash');
-const utils = require('./utils');
-const click = require('./decorators/click');
+import _ from 'lodash';
+import { 
+    parseExpression, 
+    segmentsHasExpression, 
+    evaluate, 
+    getSegmentsValue, 
+    forEachChildElement 
+} from './utils';
+import click from  './decorators/click';
 // const forEach = require('./components/foreach');
-const Component = require('./component');
-const Decorator = require('./decorator');
+import Component from './component';
+import Decorator from './decorator';
 
 /**
  * 
@@ -23,9 +29,9 @@ function renderTextNode(module, element, component) {
             continue;
         }
 
-        const segments = utils.parseExpression(
+        const segments = parseExpression(
             childNode.nodeValue, module.expressionStart, module.expressionEnd);
-        if (!utils.segmentsHasExpression(segments)) {
+        if (!segmentsHasExpression(segments)) {
             // optimize: do not update DOM when unnecessary
             childNode = childNode.nextSibling;
             continue;
@@ -43,7 +49,7 @@ function renderTextNode(module, element, component) {
                 const textNode = module.document.createTextNode(''); 
                 element.insertBefore(textNode, childNode);
                 component.addValueNodeBinding(textNode, '', () => {
-                    return utils.evaluate(model, segment.value);
+                    return evaluate(model, segment.value);
                 });
             }
         }
@@ -71,7 +77,7 @@ function render(module, element, component) {
         let childModel = model;
         const childModelExpression = element.getAttribute('data-model');
         if (childModelExpression) {
-            childModel = utils.evaluate(model, childModelExpression);
+            childModel = evaluate(model, childModelExpression);
         }
 
         const childComponent = componentFactory(module, childModel, component);
@@ -95,19 +101,19 @@ function render(module, element, component) {
             decorators.push(decorator);
             decorator.decorateBefore();
         } else {
-            const segments = utils.parseExpression(
+            const segments = parseExpression(
                 attribute.value, module.expressionStart, module.expressionEnd);
-            if (!utils.segmentsHasExpression(segments)) {
+            if (!segmentsHasExpression(segments)) {
                 continue;
             }
 
             component.addValueNodeBinding(attribute, attribute.value, () => {
-                return utils.getSegmentsValue(model, segments);
+                return getSegmentsValue(model, segments);
             });
         }
     }
 
-    utils.forEachChildElement(element, (childElement) => {
+    forEachChildElement(element, (childElement) => {
         render(module, childElement, component);
     });
 
@@ -117,7 +123,7 @@ function render(module, element, component) {
     });
 }
 
-class Module {
+export default class Module {
     /**
      * constructs a module
      * @param {*} config 
@@ -265,5 +271,3 @@ class Module {
 
 Module.RUN_AT_SERVER = Symbol('RUN_AT_SERVER');
 Module.RUN_AT_CLIENT = Symbol('RUN_AT_CLIENT');
-
-module.exports = Module;
