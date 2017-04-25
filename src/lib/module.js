@@ -247,6 +247,8 @@ export default class Module {
     bootstrap($, window, rootElement, rootModel) {
         if (this.runAt === Module.RUN_AT_SERVER) {
             this.$ = $(window);
+        } else {
+            this.$ = $;
         }
         this.window = window;
         this.document = window.document;
