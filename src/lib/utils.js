@@ -7,10 +7,10 @@
  * @param {string} end   - this symbol ends a expression, such as '}}'
  * @return {array} The segments for the expression.
  * @example
- * parse('foo') returns [{isExpression: false, value: 'foo'}]
- * parse('a{{foo}}b') returns [
+ * parseExpression('foo') returns [{isExpression: false, value: 'foo'}]
+ * parseExpression('a{{foo}}b') returns [
  *     {isExpression: false, value: 'a'},
- *     {isExpression: true, value: 'foo'},
+ *     {isExpression: true,  value: 'foo'},
  *     {isExpression: false, value: 'b'}
  * ]
  */
@@ -99,12 +99,12 @@ export function segmentsHasExpression(segments) {
 
 /**
  * Get the value of segments as parseExpression result of expression
- * @param {*} context - the conext when evaluating the expression
+ * @param {Component} component - the component in which this expression will be assessed
  * @param {array} segments - array of segment
  * @return {string} expression value.
  * 
  */
-export function getSegmentsValue(context, segments) {
+export function getSegmentsValue(component, segments) {
     let value = '';
     for (let i = 0; i < segments.length; i ++) {
         const segment = segments[i];
@@ -112,24 +112,28 @@ export function getSegmentsValue(context, segments) {
             value += segment.value;
         } else {
             // evaulate the expression
-            value += evaluate(context, segment.value);
+            value += evaluate(component, segment.value);
         }
     }
     return value;
 }
 
 /**
- * Evaluate an expression within the context
- * @param {*} context - the context where we evaluate the expression. it is referenced by 'this' in
- *                      expression
+ * Evaluate an expression within the component
+ * @param {Component} component - the component wich the expresion will be accessed
  * @param {string} expression - the expression to evaluate
  * @return {*} the value of the expression
+ * 
+ * Note: in expression, 
+ * - 'model' refere to the model associate with the component
+ * - 'this' refer to the component itself
  */
-export function evaluate(context, expression) {
+export function evaluate(component, expression) {
+    const model = component.getModel();
     const statements = `
-        (function() { 
+        (function(model) { 
             return (${expression});
-        }).apply(context)
+        }).call(component, model)
     `;
     return eval(statements);
 }

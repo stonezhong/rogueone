@@ -49,7 +49,7 @@ function renderTextNode(module, element, component) {
                 const textNode = module.document.createTextNode(''); 
                 element.insertBefore(textNode, childNode);
                 component.addValueNodeBinding(textNode, '', () => {
-                    return evaluate(model, segment.value);
+                    return evaluate(component, segment.value);
                 });
             }
         }
@@ -77,7 +77,7 @@ function render(module, element, component) {
         let childModel = model;
         const childModelExpression = element.getAttribute('data-model');
         if (childModelExpression) {
-            childModel = evaluate(model, childModelExpression);
+            childModel = evaluate(component, childModelExpression);
         }
 
         const childComponent = componentFactory(module, childModel, component);
@@ -108,7 +108,7 @@ function render(module, element, component) {
             }
 
             component.addValueNodeBinding(attribute, attribute.value, () => {
-                return getSegmentsValue(model, segments);
+                return getSegmentsValue(component, model, segments);
             });
         }
     }
