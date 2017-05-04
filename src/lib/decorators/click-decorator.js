@@ -20,8 +20,8 @@ export default class ClickDecorator extends Decorator {
         const contextExpression = this.getContextExpression();
 
         element.addEventListener('click', function() {
-            const model = module.getModel(element);
-            evaluate(model, contextExpression);
+            const component = module.getComponent(element);
+            evaluate(component, contextExpression);
             module.apply();
         }, false);
     }

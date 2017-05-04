@@ -8,10 +8,23 @@ import {
     getSegmentsValue, 
     forEachChildElement 
 } from './utils';
-import click from  './decorators/click';
+
 // const forEach = require('./components/foreach');
 import Component from './component';
 import Decorator from './decorator';
+import ClickDecorator from './decorators/click-decorator';
+
+const decorators = {
+    'ro-click': ClickDecorator,
+};
+
+function registerSystemDecorators(module) {
+    _.forEach(decorators, function(decoratorClass, name) {
+        module.setDecoratorFactory(name, function(module, element, expression) {
+            return new decoratorClass(module, element, expression);
+        });
+    });
+}
 
 /**
  * 
@@ -154,7 +167,8 @@ export default class Module {
         this.decoratorFactories = {};
 
         // this.component('forEach', forEach);
-        this.setDecoratorFactory('ro-click', click);
+        registerSystemDecorators(this);
+        
     }
 
     /**
